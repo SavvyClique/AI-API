@@ -1,2 +1,119 @@
 # AI-API
  Simple yet functional RESTful API template that is AI-friendly
+ - Includes web scraper functionality. 
+
+Full description of the functions and an installation guide.
+
+
+---
+
+
+Function Descriptions
+
+TaskResource
+
+GET: Retrieves all tasks or a specific task by ID.
+POST: Creates a new task.
+PUT: Updates an existing task.
+DELETE: Deletes a task.
+
+
+WebScraperResource
+
+POST: Initiates web scraping for a given URL.
+scrape_website: Performs the actual web scraping, saving text and images.
+same_domain: Checks if two URLs belong to the same domain.
+save_text: Saves scraped text to a file.
+save_image: Downloads and saves scraped images.
+
+
+FileResource
+GET: Retrieves a saved file (text or image) by filename.
+
+
+Security Functions
+require_api_key: A decorator that ensures all API endpoints require a valid API key.
+
+
+
+Installation Guide
+
+Set up the environment:
+Copypython -m venv venv
+source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+
+Install required packages:
+Copypip install flask flask-restful flask-sqlalchemy flask-migrate marshmallow requests beautifulsoup4 mysqlclient
+
+Set up MySQL:
+
+Install MySQL if not already installed.
+Create a new database for the project.
+Update the SQLALCHEMY_DATABASE_URI in the code with your MySQL credentials and database name.
+
+
+Initialize the database:
+Copyflask db init
+flask db migrate
+flask db upgrade
+
+Set environment variables:
+Copyexport FLASK_APP=app.py
+export FLASK_ENV=development
+On Windows, use set instead of export.
+Update the API key:
+
+Replace 'your-secret-api-key' in the code with a strong, unique API key.
+
+
+Run the application:
+Copyflask run
+
+
+Usage
+
+Authentication:
+Include the API key in the header of each request:
+CopyX-API-Key: your-secret-api-key
+
+Endpoints:
+
+Tasks: /tasks and /tasks/<task_id>
+Web Scraping: /scrape
+File Retrieval: /files/<filename>
+
+
+Example API calls:
+pythonCopyimport requests
+
+API_KEY = 'your-secret-api-key'
+BASE_URL = 'http://localhost:5000'
+HEADERS = {'X-API-Key': API_KEY}
+
+# Create a task
+response = requests.post(f'{BASE_URL}/tasks', json={'title': 'New Task'}, headers=HEADERS)
+
+# Start web scraping
+response = requests.post(f'{BASE_URL}/scrape', json={'url': 'https://example.com'}, headers=HEADERS)
+
+# Retrieve a file
+response = requests.get(f'{BASE_URL}/files/some_file.txt', headers=HEADERS)
+
+
+Security Considerations
+
+API Key: Store the API key securely and rotate it regularly.
+HTTPS: In production, always use HTTPS to encrypt data in transit.
+Input Validation: The API uses Marshmallow for input validation, but always be cautious with user inputs.
+Rate Limiting: Consider implementing rate limiting to prevent abuse.
+Error Handling: Implement more robust error handling in production.
+Logging: Add comprehensive logging for monitoring and debugging.
+
+Additional Notes
+
+This implementation uses SQLAlchemy with MySQL, but you can easily switch to another database by changing the SQLALCHEMY_DATABASE_URI.
+The web scraper is basic and doesn't respect robots.txt. In a production environment, implement proper web scraping etiquette.
+Consider implementing user authentication and authorization for multi-user scenarios.
+Regularly update dependencies to patch security vulnerabilities.
+
+This API now provides a solid foundation for building AI-friendly applications with web scraping capabilities, backed by a MySQL database and protected with basic security measures. Remember to adapt and expand upon this base according to your specific requirements and security needs.
