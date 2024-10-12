@@ -1,6 +1,5 @@
 # AI-API
- Simple yet functional RESTful API template that is AI-friendly
- - Includes web scraper functionality. 
+ Simple yet functional RESTful API template that is AI-friendly with Web Scraper functionality. 
 
 Designed to allow AI to receive requests via prompt, and grab any information from any location within a few seconds, and update their knowledge cutoff in relative real time.
 
