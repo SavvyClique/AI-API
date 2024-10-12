@@ -99,21 +99,25 @@ response = requests.post(f'{BASE_URL}/scrape', json={'url': 'https://example.com
 # Retrieve a file
 response = requests.get(f'{BASE_URL}/files/some_file.txt', headers=HEADERS)
 
+---
 
-Security Considerations
+Database Creation
 
-API Key: Store the API key securely and rotate it regularly.
-HTTPS: In production, always use HTTPS to encrypt data in transit.
-Input Validation: The API uses Marshmallow for input validation, but always be cautious with user inputs.
-Rate Limiting: Consider implementing rate limiting to prevent abuse.
-Error Handling: Implement more robust error handling in production.
-Logging: Add comprehensive logging for monitoring and debugging.
 
-Additional Notes
+Create a new MySQL database:
 
-This implementation uses SQLAlchemy with MySQL, but you can easily switch to another database by changing the SQLALCHEMY_DATABASE_URI.
-The web scraper is basic and doesn't respect robots.txt. In a production environment, implement proper web scraping etiquette.
-Consider implementing user authentication and authorization for multi-user scenarios.
-Regularly update dependencies to patch security vulnerabilities.
+sqlCopyCREATE DATABASE ai_friendly_api CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+Create a user and grant privileges:
+
+sqlCopyCREATE USER 'api_user'@'localhost' IDENTIFIED BY 'strong_password';
+GRANT ALL PRIVILEGES ON ai_friendly_api.* TO 'api_user'@'localhost';
+FLUSH PRIVILEGES;
+
+Update the SQLALCHEMY_DATABASE_URI in the Flask app configuration with these credentials.
+
+Example Database Dump
+Included is an example database dump that you can import via phpMyAdmin
+
 
 This API now provides a solid foundation for building AI-friendly applications with web scraping capabilities, backed by a MySQL database and protected with basic security measures. Remember to adapt and expand upon this base according to your specific requirements and security needs.
